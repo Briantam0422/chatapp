@@ -23,7 +23,7 @@ type UserRequest struct {
 }
 
 func HasUser(username string) bool {
-	result := FindUserByUsername(username)
+	result, _ := FindUserByUsername(username)
 	if result.RowsAffected > 0 {
 		return true
 	}
@@ -37,15 +37,18 @@ func FindUserById(id int) *gorm.DB {
 	return result
 }
 
-func FindUserByUsername(username string) *gorm.DB {
+func FindUserByUsername(username string) (*gorm.DB, User) {
+	u := User{
+		Username: username,
+	}
 	db := utils.ConnectDB()
 	defer utils.CloseDB(db)
-	result := db.First(&User{Username: username})
-	return result
+	result := db.First(&u, "username = ?", u.Username)
+	return result, u
 }
 
-func (u *User) CheckPasswordHash(hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(u.Password))
+func (u User) CheckPasswordHash(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
 }
 

@@ -14,7 +14,7 @@ func Registration(c *gin.Context) {
 	res, err := models.CreateUser(u)
 	if res != "" {
 		c.JSON(http.StatusOK, gin.H{
-			"status":  "failed",
+			"status":  "error",
 			"message": res,
 			"err":     err,
 		})
