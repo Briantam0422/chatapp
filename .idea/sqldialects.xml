@@ -4,5 +4,7 @@
     <file url="file://$PROJECT_DIR$/pkg/controllers/login/LoginController.go" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/pkg/database/migration/000001_create_user_table.down.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/pkg/database/migration/000001_create_user_table.up.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/pkg/database/migration/000002_create_chat_room_table.up.sql" dialect="GenericSQL" />
+    <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>
