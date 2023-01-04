@@ -4,7 +4,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
+	"net/http"
 )
+
+func Initial(c *gin.Context) {
+	isAuth := c.MustGet("isAuth").(bool)
+	if !isAuth {
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "error",
+			"message": "Please Login First",
+		})
+	}
+}
 
 func Connect(c *gin.Context) {
 	u := websocket.Upgrader{

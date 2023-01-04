@@ -15,13 +15,11 @@ func CheckError(err error) {
 }
 
 func ErrorRespond(c *gin.Context, err error) {
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "failed",
-			"message": "Server Error",
-			"err":     err,
-		})
-	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "failed",
+		"message": "Server Error",
+		"err":     err.Error(),
+	})
 }
 
 func Load(path string) {

@@ -2,8 +2,12 @@ package models
 
 import (
 	"chatapp/pkg/utils"
+	"errors"
+	"fmt"
+	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"os"
 	"time"
 )
 
@@ -22,8 +26,14 @@ type UserRequest struct {
 	Password string `json:"password"`
 }
 
+type Claims struct {
+	Username string `json:"username"`
+	jwt.RegisteredClaims
+}
+
 func HasUser(username string) bool {
 	result, _ := FindUserByUsername(username)
+	fmt.Println("result: ", result.RowsAffected)
 	if result.RowsAffected > 0 {
 		return true
 	}
@@ -43,7 +53,8 @@ func FindUserByUsername(username string) (*gorm.DB, User) {
 	}
 	db := utils.ConnectDB()
 	defer utils.CloseDB(db)
-	result := db.First(&u, "username = ?", u.Username)
+	fmt.Println(u.Username)
+	result := db.Find(&u, "username = ?", u.Username)
 	return result, u
 }
 
@@ -52,16 +63,42 @@ func (u User) CheckPasswordHash(password string) bool {
 	return err == nil
 }
 
-func CreateUser(u UserRequest) (string, error) {
+func (u User) GenerateToken() (string, error) {
+	// expiry time
+	expirationTime := time.Now().Add(5 * time.Minute)
+	claims := &Claims{
+		Username: u.Username,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	utils.LoadEnv()
+	jwtKey := os.Getenv("JWT_KEY")
+	tokenString, err := token.SignedString([]byte(jwtKey))
+	if err != nil {
+		return "", err
+	}
+
+	// save token to db
+	db := utils.ConnectDB()
+	defer utils.CloseDB(db)
+
+	db.Model(&u).Where("id = ?", u.Id).Update("token", tokenString)
+
+	return tokenString, nil
+}
+
+func CreateUser(u UserRequest) error {
 	db := utils.ConnectDB()
 	defer utils.CloseDB(db)
 	hasUser := HasUser(u.Username)
 	if hasUser {
-		return "User has already existed", nil
+		return errors.New("user has already existed")
 	}
 	hash, err := utils.Hash(u.Password)
 	if err != nil {
-		return "Server Error", err
+		return err
 	}
 	u.Password = hash
 	newUser := User{
@@ -71,7 +108,7 @@ func CreateUser(u UserRequest) (string, error) {
 	createdUser := db.Create(&newUser)
 	err = createdUser.Error
 	if err != nil {
-		return "Server Error", err
+		return err
 	}
-	return "", nil
+	return nil
 }

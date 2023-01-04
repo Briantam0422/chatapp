@@ -4,12 +4,17 @@ import (
 	"chatapp/pkg/controllers/chat"
 	"chatapp/pkg/controllers/login"
 	"chatapp/pkg/controllers/registration"
+	"chatapp/pkg/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
 func Routers(r *gin.Engine) {
-	r.GET("/", login.Login)
 	r.POST("/login", login.Login)
 	r.POST("/register", registration.Registration)
-	r.GET("/chat/connect", chat.Connect)
+	r.Use(middlewares.AuthRequired())
+	r.Group("chat")
+	{
+		r.GET("/initial", chat.Initial)
+		r.GET("/connect", chat.Connect)
+	}
 }
