@@ -14,11 +14,25 @@ func CheckError(err error) {
 	}
 }
 
+func UnAuthorized(c *gin.Context, message string) {
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "unauthorized",
+		"message": message,
+	})
+}
+
 func ErrorRespond(c *gin.Context, err error) {
 	c.JSON(http.StatusOK, gin.H{
-		"status":  "failed",
+		"status":  "error",
 		"message": "Server Error",
 		"err":     err.Error(),
+	})
+}
+
+func ErrorRespondWithMessage(c *gin.Context, message string) {
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "error",
+		"message": message,
 	})
 }
 

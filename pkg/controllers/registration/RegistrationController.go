@@ -5,6 +5,7 @@ import (
 	"chatapp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 func Registration(c *gin.Context) {
@@ -26,12 +27,20 @@ func Registration(c *gin.Context) {
 		utils.ErrorRespond(c, err)
 		return
 	}
-	tokenString, err := user.GenerateToken()
+	expirationTime := time.Now().Add(5 * time.Minute)
+	tokenString, err := user.GenerateToken(expirationTime)
 	if err != nil {
 		utils.ErrorRespond(c, err)
 		return
 	}
-	c.SetCookie("token", tokenString, 9999, "/", "localhost", true, false)
+	//c.SetCookie("token", tokenString, 9999, "/", "localhost", true, false)
+
+	// set browser cookie
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":   "success",

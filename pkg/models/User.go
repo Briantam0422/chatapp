@@ -63,9 +63,8 @@ func (u User) CheckPasswordHash(password string) bool {
 	return err == nil
 }
 
-func (u User) GenerateToken() (string, error) {
+func (u User) GenerateToken(expirationTime time.Time) (string, error) {
 	// expiry time
-	expirationTime := time.Now().Add(5 * time.Minute)
 	claims := &Claims{
 		Username: u.Username,
 		RegisteredClaims: jwt.RegisteredClaims{

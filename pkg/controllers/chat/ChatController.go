@@ -1,6 +1,7 @@
 package chat
 
 import (
+	"chatapp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
@@ -10,11 +11,12 @@ import (
 func Initial(c *gin.Context) {
 	isAuth := c.MustGet("isAuth").(bool)
 	if !isAuth {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "error",
-			"message": "Please Login First",
-		})
+		utils.UnAuthorized(c, "Please Login First")
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+	})
 }
 
 func Connect(c *gin.Context) {

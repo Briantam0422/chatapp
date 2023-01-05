@@ -5,38 +5,47 @@ import (
 	"chatapp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 func Login(c *gin.Context) {
 	var u models.UserRequest
 	// get request data
 	err := c.ShouldBind(&u)
-	utils.ErrorRespond(c, err)
+	if err != nil {
+		utils.ErrorRespond(c, err)
+		return
+	}
 
 	// check has username
 	hasUser := models.HasUser(u.Username)
 	if !hasUser {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "error",
-			"message": "User not found",
-		})
+		utils.ErrorRespondWithMessage(c, "User not found")
 		return
 	}
 	// check password
 	_, user := models.FindUserByUsername(u.Username)
 	authorized := user.CheckPasswordHash(u.Password)
 	if !authorized {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "error",
-			"message": "Invalid Username and Password",
-		})
+		utils.ErrorRespondWithMessage(c, "Invalid Username and Password")
 		return
 	}
 	// create jwt token
-	tokenString, err := user.GenerateToken()
-	utils.ErrorRespond(c, err)
-	c.SetCookie("token", tokenString, 9999, "/", "localhost", true, false)
+	expirationTime := time.Now().Add(5 * time.Minute)
+	tokenString, err := user.GenerateToken(expirationTime)
+	if err != nil {
+		utils.ErrorRespond(c, err)
+		return
+	}
 
+	// set browser cookie
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
+
+	// return json respond
 	c.JSON(http.StatusOK, gin.H{
 		"status":   "ok",
 		"username": u.Username,
