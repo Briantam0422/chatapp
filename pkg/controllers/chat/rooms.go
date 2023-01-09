@@ -31,6 +31,7 @@ func (rs *Rooms) run() {
 			if _, ok := rs.rooms[room.id]; ok {
 				delete(rs.rooms, room.id)
 				for client := range room.clients {
+					delete(room.clients, client)
 					close(client.send)
 					fmt.Println("clients unregistered", len(room.clients))
 				}

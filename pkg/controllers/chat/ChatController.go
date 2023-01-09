@@ -52,9 +52,6 @@ func Chat(rooms *Rooms) gin.HandlerFunc {
 		client := newClient(id, r, c.Writer, c.Request)
 		client.room.register <- client
 		fmt.Println(client.room)
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-		})
 	}
 	return gin.HandlerFunc(fn)
 }
