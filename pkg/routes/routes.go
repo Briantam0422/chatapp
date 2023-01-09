@@ -15,11 +15,9 @@ func Routers(r *gin.Engine) {
 	r.Group("chat")
 	{
 		rooms := chat.Initialize()
-		//room := chat.NewRoom(rooms)
 		r.GET("/start", chat.Chat(rooms))
 		r.GET("/initial", chat.Initial)
 		r.GET("/new", chat.New(rooms))
-		//r.GET("/connect", chat.Connect)
-
+		r.GET("/close", chat.Close(rooms))
 	}
 }
