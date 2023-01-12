@@ -5,10 +5,14 @@ import (
 	"chatapp/pkg/controllers/login"
 	"chatapp/pkg/controllers/registration"
 	"chatapp/pkg/middlewares"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func Routers(r *gin.Engine) {
+	// cross origins
+	r.Use(cors.Default())
+	// API
 	r.POST("/login", login.Login)
 	r.POST("/register", registration.Registration)
 	r.Use(middlewares.AuthRequired())
