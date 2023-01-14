@@ -24,8 +24,8 @@ func UnAuthorized(c *gin.Context, message string) {
 func ErrorRespond(c *gin.Context, err error) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "error",
-		"message": "Server Error",
-		"err":     err.Error(),
+		"message": err.Error(),
+		"err":     "Server Error",
 	})
 }
 
