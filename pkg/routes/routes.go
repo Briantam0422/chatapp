@@ -13,6 +13,7 @@ import (
 func Routers(r *gin.Engine) {
 	// cross origins
 	//r.Use(cors.Default())
+	// list font end localhost port 5173
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:5173"},
 		AllowMethods:     []string{"GET", "PUT", "PATCH", "OPTIONS"},
