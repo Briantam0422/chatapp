@@ -7,15 +7,30 @@ import (
 	"chatapp/pkg/middlewares"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"time"
 )
 
 func Routers(r *gin.Engine) {
 	// cross origins
-	r.Use(cors.Default())
+	//r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "PUT", "PATCH", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 	// API
 	r.POST("/login", login.Login)
 	r.POST("/register", registration.Registration)
+	// Auth Middlewares
 	r.Use(middlewares.AuthRequired())
+	r.GET("/isAuth", login.IsAuth)
+	// Chat API
 	r.Group("chat")
 	{
 		rooms := chat.Initialize()

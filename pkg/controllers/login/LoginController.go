@@ -52,3 +52,14 @@ func Login(c *gin.Context) {
 		"token":    tokenString,
 	})
 }
+
+func IsAuth(c *gin.Context) {
+	isAuth := c.MustGet("isAuth").(bool)
+	if !isAuth {
+		utils.UnAuthorized(c, "Please Login First")
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+	})
+}

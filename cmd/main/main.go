@@ -10,7 +10,7 @@ func main() {
 	// get routers
 	routes.Routers(r)
 	// serve default port 8080
-	err := r.Run()
+	err := r.Run(":8080")
 	if err != nil {
 		panic(err)
 	}
