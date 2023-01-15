@@ -5,25 +5,26 @@ import (
 	"chatapp/pkg/controllers/login"
 	"chatapp/pkg/controllers/registration"
 	"chatapp/pkg/middlewares"
+	"chatapp/pkg/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"os"
 	"time"
 )
 
 func Routers(r *gin.Engine) {
 	// cross origins
-	//r.Use(cors.Default())
-	// list font end localhost port 5173
+	// listen font end localhost port 5173
+	utils.LoadEnv()
+	productionOrigin := os.Getenv("APP_URL")
+	devOrigin := os.Getenv("APP_URL") + ":" + os.Getenv("DEV_FRONTEND_PORT")
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowOrigins:     []string{productionOrigin, devOrigin},
 		AllowMethods:     []string{"GET", "PUT", "PATCH", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://github.com"
-		},
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 	// API
 	r.POST("/login", login.Login)
