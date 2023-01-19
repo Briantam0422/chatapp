@@ -3,7 +3,9 @@ package login
 import (
 	"chatapp/pkg/models"
 	"chatapp/pkg/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"time"
 )
@@ -48,6 +50,7 @@ func Login(c *gin.Context) {
 	// return json respond
 	c.JSON(http.StatusOK, gin.H{
 		"status":   "ok",
+		"id":       u.Id,
 		"username": u.Username,
 		"token":    tokenString,
 	})
@@ -59,7 +62,19 @@ func IsAuth(c *gin.Context) {
 		utils.UnAuthorized(c, "Please Login First")
 		return
 	}
+	// get cookie token
+	token, err := c.Cookie("token")
+	fmt.Println(token)
+	if err != nil {
+		log.Println(err)
+		c.Set("isAuth", false)
+		return
+	}
+	r, u := models.FindUserByToken(token)
+	fmt.Println(r.Row())
 	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
+		"status":   "ok",
+		"id":       u.Id,
+		"username": u.Username,
 	})
 }

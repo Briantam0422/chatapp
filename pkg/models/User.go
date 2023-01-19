@@ -16,12 +16,14 @@ type User struct {
 	Id        int            `json:"id,identity"`
 	Username  string         `json:"username"`
 	Password  string         `json:"password"`
+	Token     string         `json:"token"`
 	CreatedAt *time.Time     `json:"created_at"`
 	UpdatedAt *time.Time     `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`
 }
 
 type UserRequest struct {
+	Id       int    `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
@@ -45,6 +47,14 @@ func FindUserById(id int) *gorm.DB {
 	defer utils.CloseDB(db)
 	result := db.First(&User{Id: id})
 	return result
+}
+
+func FindUserByToken(token string) (*gorm.DB, UserRequest) {
+	u := UserRequest{}
+	db := utils.ConnectDB()
+	defer utils.CloseDB(db)
+	result := db.Model(&User{}).First(&u, "token = ?", token)
+	return result, u
 }
 
 func FindUserByUsername(username string) (*gorm.DB, User) {

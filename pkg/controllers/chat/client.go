@@ -31,6 +31,7 @@ var upgrader = websocket.Upgrader{
 
 type Client struct {
 	id   string
+	name string
 	room *Room
 	conn *websocket.Conn
 	send chan *Message
@@ -71,6 +72,7 @@ func (c *Client) receiveMessages() {
 			Message:  string(message),
 			ClientID: c.id,
 			Type:     "text",
+			Username: c.name,
 		}
 	}
 }
@@ -112,14 +114,14 @@ func (c *Client) sendMessages() {
 	}
 }
 
-func newClient(id string, room *Room, w http.ResponseWriter, r *http.Request) *Client {
+func newClient(id string, name string, room *Room, w http.ResponseWriter, r *http.Request) *Client {
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
 	}
 
-	client := &Client{id: id, room: room, conn: conn, send: make(chan *Message, 256)}
+	client := &Client{id: id, name: name, room: room, conn: conn, send: make(chan *Message, 256)}
 
 	go client.sendMessages()
 	go client.receiveMessages()

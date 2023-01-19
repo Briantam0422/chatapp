@@ -36,6 +36,7 @@ func Chat(rooms *Rooms) gin.HandlerFunc {
 	//room := newRoom()
 	fn := func(c *gin.Context) {
 		id := c.Query("id")
+		name := c.Query("name")
 		roomId := c.Query("room_id")
 		rId, err := strconv.ParseInt(roomId, 10, 64)
 		if err != nil {
@@ -49,7 +50,7 @@ func Chat(rooms *Rooms) gin.HandlerFunc {
 		}
 		fmt.Println("client id : ", id)
 		fmt.Println("enter room : ", roomId)
-		client := newClient(id, r, c.Writer, c.Request)
+		client := newClient(id, name, r, c.Writer, c.Request)
 		client.room.register <- client
 		fmt.Println(client.room)
 	}
