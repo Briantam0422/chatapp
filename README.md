@@ -21,13 +21,30 @@ Database migration has not finished yet. I will update it as soon as possible.
 table
 
 - users
-    - id
-    - username
-    - password
-    - token
-    - created_at
-    - updated_at
-    - deleted_at
+    - id int
+    - username varchar(255)
+    - password varchar(255)
+    - token varchar(500)
+    - created_at timestamp
+    - updated_at timestamp
+    - deleted_at timestamp
+- chat_records
+  - id int
+  - message TEXT
+  - created_by varchar(255)
+  - created_at timestamp
+  - updated_at timestamp
+  - deleted_at timestamp
+- chat_rooms
+  - id int
+  - name varchar(255)
+  - created_by varchar(255)
+  - created_at timestamp
+  - updated_at timestamp
+  - deleted_at timestamp
+- schema_migrations
+  - version bigint
+  - dirty tinyint(1)
 
 ### APIs
 
