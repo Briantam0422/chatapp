@@ -33,7 +33,7 @@ func Login(c *gin.Context) {
 		return
 	}
 	// create jwt token
-	expirationTime := time.Now().Add(5 * time.Minute)
+	expirationTime := time.Now().Add(60 * time.Minute)
 	tokenString, err := user.GenerateToken(expirationTime)
 	if err != nil {
 		utils.ErrorRespond(c, err)

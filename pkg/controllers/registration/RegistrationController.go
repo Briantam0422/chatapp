@@ -27,7 +27,7 @@ func Registration(c *gin.Context) {
 		utils.ErrorRespond(c, err)
 		return
 	}
-	expirationTime := time.Now().Add(5 * time.Minute)
+	expirationTime := time.Now().Add(60 * time.Minute)
 	tokenString, err := user.GenerateToken(expirationTime)
 	if err != nil {
 		utils.ErrorRespond(c, err)
