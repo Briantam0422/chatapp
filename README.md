@@ -18,7 +18,7 @@ go run main.go
 
 Database migration has not finished yet. I will update it as soon as possible.
 
-table
+tables
 
 - users
     - id int
