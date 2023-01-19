@@ -20,6 +20,7 @@ type Message struct {
 	Type     string `json:"type,omitempty"`
 	ClientID string `json:"client_id,omitempty"`
 	Username string `json:"username,omitempty"`
+	Time     string `json:"time,omitempty"`
 }
 
 func NewRoom(rooms *Rooms) *Room {

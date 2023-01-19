@@ -36,7 +36,7 @@ func Chat(rooms *Rooms) gin.HandlerFunc {
 	//room := newRoom()
 	fn := func(c *gin.Context) {
 		id := c.Query("id")
-		name := c.Query("name")
+		name := c.Query("username")
 		roomId := c.Query("room_id")
 		rId, err := strconv.ParseInt(roomId, 10, 64)
 		if err != nil {

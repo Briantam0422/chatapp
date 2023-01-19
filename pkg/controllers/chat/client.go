@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -68,11 +69,13 @@ func (c *Client) receiveMessages() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		t := time.Now()
 		c.room.broadcast <- &Message{
 			Message:  string(message),
 			ClientID: c.id,
 			Type:     "text",
 			Username: c.name,
+			Time:     strconv.Itoa(t.Year()) + "-" + strconv.Itoa(int(t.Month())) + "-" + strconv.Itoa(int(t.Day())) + " " + strconv.Itoa(t.Hour()) + ":" + strconv.Itoa(t.Minute()),
 		}
 	}
 }
