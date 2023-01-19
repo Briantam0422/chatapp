@@ -16,7 +16,7 @@ go run main.go
 
 ## Database
 
-Database migration has not finished yet. I will update it as soon as possible.
+Database migration has not complete yet. I will update it as soon as possible.
 
 tables
 
