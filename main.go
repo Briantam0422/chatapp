@@ -3,7 +3,7 @@ package main
 import (
 	"chatapp/pkg/routes"
 	"github.com/gin-gonic/gin"
-	"chatapp/pkg/utils"
+// 	"chatapp/pkg/utils"
 )
 
 func main() {
