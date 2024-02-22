@@ -15,7 +15,7 @@ import (
 func Routers(r *gin.Engine) {
 	// cross origins
 	// listen font end localhost port 5173
-	utils.LoadEnv()
+// 	utils.LoadEnv()
 	productionOrigin := os.Getenv("APP_URL")
 	devOrigin := os.Getenv("APP_URL") + ":" + os.Getenv("DEV_FRONTEND_PORT")
 	r.Use(cors.New(cors.Config{

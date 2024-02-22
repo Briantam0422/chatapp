@@ -23,7 +23,7 @@ func AuthRequired() gin.HandlerFunc {
 		}
 
 		//get env jwtKey
-		utils.LoadEnv()
+// 		utils.LoadEnv()
 		jwtKey := os.Getenv("JWT_KEY")
 
 		// initialize a new instance of claims

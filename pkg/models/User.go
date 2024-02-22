@@ -82,7 +82,7 @@ func (u User) GenerateToken(expirationTime time.Time) (string, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	utils.LoadEnv()
+// 	utils.LoadEnv()
 	jwtKey := os.Getenv("JWT_KEY")
 	tokenString, err := token.SignedString([]byte(jwtKey))
 	if err != nil {

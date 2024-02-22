@@ -8,7 +8,7 @@ import (
 )
 
 func GetDBUrl() string {
-	LoadEnv()
+// 	LoadEnv()
 	dbUser := os.Getenv("DATABASE_USER")
 	dbHost := os.Getenv("DATABASE_HOST")
 	dbPort := os.Getenv("DATABASE_PORT")
