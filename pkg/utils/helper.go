@@ -37,7 +37,7 @@ func ErrorRespondWithMessage(c *gin.Context, message string) {
 }
 
 func Load(path string) {
-	err := godotenv.Load("../main/.env")
+	err := godotenv.Load(".env")
 	CheckError(err)
 }
 
