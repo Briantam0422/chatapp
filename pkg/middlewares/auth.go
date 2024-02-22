@@ -15,6 +15,7 @@ func AuthRequired() gin.HandlerFunc {
 
 		// get cookie token
 		token, err := c.Cookie("token")
+		log.Println(token)
 		fmt.Println(token)
 		if err != nil {
 			log.Println(err)
