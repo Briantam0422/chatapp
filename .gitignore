@@ -16,4 +16,4 @@
 *.sln
 *.local
 
-cmd/main/.env
+./cmd/main/.env
