@@ -13,7 +13,8 @@ func GetDBUrl() string {
 	dbHost := os.Getenv("DATABASE_HOST")
 	dbPort := os.Getenv("DATABASE_PORT")
 	dbName := os.Getenv("DATABASE_NAME")
-	dsn := fmt.Sprintf("%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbHost, dbPort, dbName)
+	dbPassword := os.Getenv("DATABASE_PASSWORD")
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
 	return dsn
 }
 
