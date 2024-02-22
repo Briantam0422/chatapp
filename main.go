@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-    utils.LoadEnv()
+//     utils.LoadEnv()
 	r := gin.Default()
 	// get routers
 	routes.Routers(r)
