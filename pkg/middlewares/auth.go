@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"chatapp/pkg/models"
-	"chatapp/pkg/utils"
+// 	"chatapp/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"

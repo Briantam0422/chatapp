@@ -5,7 +5,7 @@ import (
 	"chatapp/pkg/controllers/login"
 	"chatapp/pkg/controllers/registration"
 	"chatapp/pkg/middlewares"
-	"chatapp/pkg/utils"
+// 	"chatapp/pkg/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"os"
