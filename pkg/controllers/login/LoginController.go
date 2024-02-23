@@ -45,6 +45,7 @@ func Login(c *gin.Context) {
 		Name:    "token",
 		Value:   tokenString,
 		Expires: expirationTime,
+		Path: "/"
 	})
 
 	// return json respond
