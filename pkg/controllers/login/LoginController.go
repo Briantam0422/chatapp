@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"os"
 )
 
 func Login(c *gin.Context) {
@@ -43,6 +44,7 @@ func Login(c *gin.Context) {
 	// set browser cookie
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:    "token",
+		Domain: os.Getenv("APP_URL"),
 		Value:   tokenString,
 		Expires: expirationTime,
 		Path: "/",
