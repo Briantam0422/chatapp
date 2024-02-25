@@ -19,7 +19,7 @@ func Routers(r *gin.Engine) {
 	productionOrigin := os.Getenv("APP_URL")
 	devOrigin := os.Getenv("APP_URL") + ":" + os.Getenv("DEV_FRONTEND_PORT")
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{productionOrigin, devOrigin, "http://0.0.0.0", "https://0.0.0.0", "https://chatapp.api.briantambusiness.com"},
+		AllowOrigins:     []string{productionOrigin, devOrigin},
 		AllowMethods:     []string{"GET", "PUT", "PATCH", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
