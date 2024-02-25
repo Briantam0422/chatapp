@@ -4,6 +4,9 @@
 
 After running the backend code, please go to https://github.com/Briantam0422/chatapp-frontend to run frontend code.
 
+## Live Demo
+A Demo website : http://chatapp.briantambusiness.com/login
+
 ## Backend
 
 Run the project in the localhost
@@ -15,8 +18,6 @@ go run main.go
 ```
 
 ## Database
-
-Database migration has not been completed yet. I will update it as soon as possible.
 
 tables
 
@@ -57,8 +58,10 @@ tables
     - For create a new room
 - chat/close
     - Close the web socket connection
-
- 
+- chat/initial
+    - Initial a chat
+- chat/start
+    - Creat a web socket connect with server
 
 ### Middlewares
 
@@ -80,14 +83,19 @@ tables
 
 ![Untitled](instruction/chat.png)
 
-1. Create a chat room
-2. Share room id to your friends
+# ** Instruction **
+1. Register an account
+2. Login to the account
+3. Create a chat room (For room owner)
+4. Share room id to your friends / Or open another browsers ( Pretend there are multiple people )
     1. Copy the room id and send to your friends
-3. Join room by id
+    2. Paste the room id in the "room_id" input box
+    3. Click "Connect" button
+5. Join room by id
     1. Paste room id in the “ROOM ID” input
     2. Click connect
-    3. Now you can start sending messages
-4. Live chat
+    3. Now you can start sending messages with other people in the same room
+6. Live chat
     1. real time message
-5. Multiple user in a room
+7. Multiple user in a room
     1. A chat room supports multiple user in a room
