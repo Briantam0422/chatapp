@@ -2,19 +2,18 @@ package main
 
 import (
 	"chatapp/pkg/routes"
+	"chatapp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"os"
-// 	"chatapp/pkg/utils"
 )
 
 func main() {
-//     utils.LoadEnv()
+	utils.LoadEnv()
 	r := gin.Default()
 	// get routers
 	routes.Routers(r)
-	// serve default port 8080
 	port := os.Getenv("PORT")
-	err := r.Run("0.0.0.0:" + port)
+	err := r.Run(":" + port)
 	if err != nil {
 		panic(err)
 	}
