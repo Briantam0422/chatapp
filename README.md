@@ -98,4 +98,4 @@ tables
 6. Live chat
     1. real time message
 7. Multiple user in a room
-    1. A chat room supports multiple user in a room
+    1. A chat room supports multiple users in a room
