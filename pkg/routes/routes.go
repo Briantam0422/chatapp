@@ -18,8 +18,9 @@ func Routers(r *gin.Engine) {
 	// 	utils.LoadEnv()
 	productionOrigin := os.Getenv("APP_URL")
 	devOrigin := os.Getenv("APP_URL") + ":" + os.Getenv("DEV_FRONTEND_PORT")
+	localOrigin := os.Getenv("LOCAL_IP_ADDRESS")
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{productionOrigin, devOrigin},
+		AllowOrigins:     []string{productionOrigin, devOrigin, localOrigin},
 		AllowMethods:     []string{"GET", "PUT", "PATCH", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
