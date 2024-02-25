@@ -2,13 +2,12 @@ package main
 
 import (
 	"chatapp/pkg/routes"
-	"chatapp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"os"
 )
 
 func main() {
-	utils.LoadEnv()
+	//utils.LoadEnv()
 	r := gin.Default()
 	// get routers
 	routes.Routers(r)
