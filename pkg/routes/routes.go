@@ -4,8 +4,8 @@ import (
 	"chatapp/pkg/controllers/chat"
 	"chatapp/pkg/controllers/login"
 	"chatapp/pkg/controllers/registration"
+	"chatapp/pkg/controllers/test"
 	"chatapp/pkg/middlewares"
-// 	"chatapp/pkg/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"os"
@@ -15,7 +15,7 @@ import (
 func Routers(r *gin.Engine) {
 	// cross origins
 	// listen font end localhost port 5173
-// 	utils.LoadEnv()
+	// 	utils.LoadEnv()
 	productionOrigin := os.Getenv("APP_URL")
 	devOrigin := os.Getenv("APP_URL") + ":" + os.Getenv("DEV_FRONTEND_PORT")
 	r.Use(cors.New(cors.Config{
@@ -27,6 +27,7 @@ func Routers(r *gin.Engine) {
 		MaxAge:           12 * time.Hour,
 	}))
 	// API
+	r.GET("/testing", test.TestingAPI)
 	r.POST("/login", login.Login)
 	r.POST("/register", registration.Registration)
 	// Auth Middlewares
